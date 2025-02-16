@@ -19,3 +19,11 @@ export const cityTable = pgTable("city", {
         .notNull(),
     createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const zoneTable = pgTable("zone", {
+    id: uuid("id")
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    name: text("name").unique().notNull(),
+    createdAt: timestamp("created_at").defaultNow(),
+});

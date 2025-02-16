@@ -96,13 +96,10 @@ export const urgencyStatusTable = pgTable("urgency_status", {
 
 // TODO: Create junction table for procedures and patient_health_status
 
-export const patientHealthStatusTable = pgTable("patient_health_status", {
+export const healthStatusTable = pgTable("patient_health_status", {
     id: uuid("id")
         .primaryKey()
         .default(sql`gen_random_uuid()`),
-    patientId: uuid("patient_id")
-        .references(() => patientTable.id)
-        .notNull(),
     cramsScaleId: uuid("crams_scale_id")
         .references(() => cramsScaleTable.id)
         .notNull(),
@@ -124,5 +121,18 @@ export const patientHealthStatusTable = pgTable("patient_health_status", {
         () => urgencyStatusTable.id,
     ),
     procedure: text("procedure").array().notNull(),
+    createdAt: date("created_at").defaultNow(),
+});
+
+export const healthStatusToPatientTable = pgTable("health_status_to_patient", {
+    id: uuid("id")
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    patientId: uuid("patient_id")
+        .references(() => patientTable.id)
+        .notNull(),
+    healthStatusId: uuid("health_status_id")
+        .references(() => healthStatusTable.id)
+        .notNull(),
     createdAt: date("created_at").defaultNow(),
 });
