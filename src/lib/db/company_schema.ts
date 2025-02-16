@@ -6,6 +6,7 @@ export const companyTable = pgTable("company", {
         .primaryKey()
         .default(sql`gen_random_uuid()`),
     name: text("name").unique().notNull(),
+    nit: text("nit").unique().notNull(),
     isActive: boolean("is_active").notNull().default(true),
     createdAt: date("created_at")
         .notNull()

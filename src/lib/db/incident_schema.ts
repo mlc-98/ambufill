@@ -1,6 +1,7 @@
 import { desc, sql } from "drizzle-orm";
 import { date, pgTable, text, time, uuid } from "drizzle-orm/pg-core";
 import { cityTable, zoneTable } from "./address_schema";
+import { involvedVehicleTable } from "./vehicle_schema";
 
 export const incidentTable = pgTable("incident", {
     id: uuid("id")
@@ -18,6 +19,9 @@ export const incidentTable = pgTable("incident", {
         .references(() => zoneTable.id)
         .notNull(),
     description: text("description").notNull(),
+    involvedVehicleId: uuid("involved_vehicle_id")
+        .references(() => involvedVehicleTable.id)
+        .notNull(),
     receptorIps: text("receptor_ips").notNull(),
     receiverFirstName: text("receiver_first_name").notNull(),
     receiverSecondName: text("receiver_second_name"),
