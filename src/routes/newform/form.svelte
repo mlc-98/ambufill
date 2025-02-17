@@ -4,6 +4,7 @@
     import { Input } from '$lib/components/ui/input/index.js';
     import * as Select from '$lib/components/ui/select/index.js'
     import * as Tabs from '$lib/components/ui/tabs/index.js';
+    import PatientInfoForm from './PatientInfoForm.svelte';
     import { formSchema, type FormSchema } from './schema';
     import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
     import { zodClient } from 'sveltekit-superforms/adapters';
@@ -38,16 +39,16 @@
 
 <form method="POST" use:enhance>
     <div class="hero m-8 min-h-screen">
-        <Tabs.Root>
+        <Tabs.Root class="w-[580px]">
             <Tabs.List>
                 <Tabs.Trigger value="crewInfo">Equipo de emergencias</Tabs.Trigger>
                 <Tabs.Trigger value="patientInfo">Información personal paciente</Tabs.Trigger>
                 <Tabs.Trigger value="patientHealthStatus">Condición de salud paciente</Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content value="crewInfo">
-                <Card.Root  class="w-[580px]">
+                <Card.Root>
                     <Card.Header>
-                      <Card.Title>Información personal enfermero</Card.Title>
+                      <Card.Title class="text-xl">Información personal enfermero</Card.Title>
                     </Card.Header>
                     <Card.Content>
                         <Form.Field {form} name="nurseIdType">
@@ -121,7 +122,7 @@
                         </Form.Field>
                     </Card.Content>
                   </Card.Root>
-                  <Card.Root class="w-[580px]">
+                  <Card.Root>
                     <Card.Header>
                       <Card.Title>Información conductor</Card.Title>
                     </Card.Header>
@@ -199,7 +200,7 @@
                     </Card.Content>
                   </Card.Root>
 
-                  <Card.Root class="w-[580px]">
+                  <Card.Root>
                     <Card.Header>
                       <Card.Title>Vehículo de emergencia</Card.Title>
                     </Card.Header>
@@ -216,7 +217,9 @@
                     </Card.Content>
                   </Card.Root>
             </Tabs.Content>
-            <Tabs.Content value="patientInfo"></Tabs.Content>
+            <Tabs.Content value="patientInfo">
+                <PatientInfoForm />
+            </Tabs.Content>
             <Tabs.Content value="patientHealthStatus">INFO PACIENTE</Tabs.Content>
         </Tabs.Root>
     </div>
