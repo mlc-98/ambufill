@@ -12,7 +12,6 @@ export const requiredName = z
     .trim();
 export const optionalName = z
     .string()
-    .min(1)
     .max(50)
     .regex(alphabeticSpace, {
         message: 'Caracteres inválidos. Se permiten únicamente letras y espacios.'
