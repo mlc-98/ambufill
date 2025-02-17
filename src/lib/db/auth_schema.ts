@@ -45,4 +45,4 @@ export const profileTable = pgTable("profile", {
         .notNull(),
     isActive: boolean("is_active").notNull().default(true).notNull(),
     createdAt: timestamp("created_at").defaultNow(),
-});
+}).enableRLS();
