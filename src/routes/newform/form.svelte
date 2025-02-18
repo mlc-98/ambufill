@@ -2,7 +2,7 @@
     import * as Card from '$lib/components/ui/card/index.js';
     import * as Form from '$lib/components/ui/form/index.js';
     import { Input } from '$lib/components/ui/input/index.js';
-    import * as Select from '$lib/components/ui/select/index.js'
+    import * as Select from '$lib/components/ui/select/index.js';
     import * as Tabs from '$lib/components/ui/tabs/index.js';
     import PatientInfoForm from './PatientInfoForm.svelte';
     import { formSchema, type FormSchema } from './schema';
@@ -48,21 +48,28 @@
             <Tabs.Content value="crewInfo">
                 <Card.Root>
                     <Card.Header>
-                      <Card.Title class="text-xl">Información personal enfermero</Card.Title>
+                        <Card.Title class="text-xl">Información personal enfermero</Card.Title>
                     </Card.Header>
                     <Card.Content>
                         <Form.Field {form} name="nurseIdType">
                             <Form.Control>
                                 {#snippet children({ props })}
                                     <Form.Label>Tipo de documento</Form.Label>
-                                    <Select.Root type="single" name="nationalIdType" bind:value={nurseSelectedIdType}>
+                                    <Select.Root
+                                        type="single"
+                                        name="nationalIdType"
+                                        bind:value={nurseSelectedIdType}
+                                    >
                                         <Select.Trigger class="w-[180px]">
                                             {triggerContent}
                                         </Select.Trigger>
                                         <Select.Content>
                                             <Select.Group>
                                                 {#each nationalIdTypes as item}
-                                                    <Select.Item value={item.abbreviation} label={item.label}>{item.label}</Select.Item>
+                                                    <Select.Item
+                                                        value={item.abbreviation}
+                                                        label={item.label}>{item.label}</Select.Item
+                                                    >
                                                 {/each}
                                             </Select.Group>
                                         </Select.Content>
@@ -75,7 +82,7 @@
                             <Form.Control>
                                 {#snippet children({ props })}
                                     <Form.Label>Número de documento de documento</Form.Label>
-                                    <Input {...props} bind:value={$formData.nurseIdNumber} />
+                                    <Input {...props} bind:value={formData.emergencyCrew.nursePersonalInfo.nurseIdNumber} />
                                 {/snippet}
                             </Form.Control>
                             <Form.FieldErrors />
@@ -121,24 +128,31 @@
                             <Form.FieldErrors />
                         </Form.Field>
                     </Card.Content>
-                  </Card.Root>
-                  <Card.Root>
+                </Card.Root>
+                <Card.Root>
                     <Card.Header>
-                      <Card.Title>Información conductor</Card.Title>
+                        <Card.Title>Información conductor</Card.Title>
                     </Card.Header>
                     <Card.Content>
                         <Form.Field {form} name="driverIdType">
                             <Form.Control>
                                 {#snippet children({ props })}
                                     <Form.Label>Tipo de documento</Form.Label>
-                                    <Select.Root type="single" name="nationalIdType" bind:value={driverSelectedIdType}>
+                                    <Select.Root
+                                        type="single"
+                                        name="nationalIdType"
+                                        bind:value={driverSelectedIdType}
+                                    >
                                         <Select.Trigger class="w-[180px]">
                                             {driverTriggerContent}
                                         </Select.Trigger>
                                         <Select.Content>
                                             <Select.Group>
                                                 {#each nationalIdTypes as item}
-                                                    <Select.Item value={item.abbreviation} label={item.label}>{item.label}</Select.Item>
+                                                    <Select.Item
+                                                        value={item.abbreviation}
+                                                        label={item.label}>{item.label}</Select.Item
+                                                    >
                                                 {/each}
                                             </Select.Group>
                                         </Select.Content>
@@ -196,13 +210,12 @@
                             </Form.Control>
                             <Form.FieldErrors />
                         </Form.Field>
-
                     </Card.Content>
-                  </Card.Root>
+                </Card.Root>
 
-                  <Card.Root>
+                <Card.Root>
                     <Card.Header>
-                      <Card.Title>Vehículo de emergencia</Card.Title>
+                        <Card.Title>Vehículo de emergencia</Card.Title>
                     </Card.Header>
                     <Card.Content>
                         <Form.Field {form} name="ambulancePlate">
@@ -215,10 +228,10 @@
                             <Form.FieldErrors />
                         </Form.Field>
                     </Card.Content>
-                  </Card.Root>
+                </Card.Root>
             </Tabs.Content>
             <Tabs.Content value="patientInfo">
-                <PatientInfoForm />
+                <PatientInfoForm data={$formData.}/>
             </Tabs.Content>
             <Tabs.Content value="patientHealthStatus">INFO PACIENTE</Tabs.Content>
         </Tabs.Root>

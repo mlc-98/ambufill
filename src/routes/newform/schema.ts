@@ -1,39 +1,79 @@
-import { alphabetical, alphanumeric, alphanumericPunctuation, numeric } from '$lib/regexp/regexp';
-import { file, nationalIdNumber, nationalIdType, optionalName, requiredName } from './primitives';
+import {
+    alphabetical,
+    alphabeticSpace,
+    alphanumeric,
+    alphanumericPunctuation,
+    numeric
+} from '$lib/regexp/regexp';
+import { locationSchema } from '$lib/schema/location';
+import { PersonSchema } from '$lib/schema/person';
+import { minLengthMessage, UploadFile } from '$lib/schema/primitives';
 import { z } from 'zod';
 
+export const AmbulanceSchema = z.object({
+    plate: z
+        .string()
+        .regex(alphanumeric, {
+            message: 'Caracteres inválidos. Se permiten únicamente caracteres alfanuméricos'
+        })
+        .trim()
+        .length(6, { message: 'La longitud debe ser de 6 caracteres' })
+        .nonempty()
+});
+
+export const EpsSchema = z.object({
+    id: z.string().uuid().nonempty(),
+    name: z
+        .string()
+        .trim()
+        .regex(alphanumericPunctuation)
+        .min(1, { message: minLengthMessage })
+        .max(100, { message: 'La longitud máxima es de 100 caracteres' })
+});
+
+// First section
+export const EmergencyCrewSchema = z.object({
+    nursePersonalInfo: PersonSchema,
+    driverPersonalInfo: PersonSchema,
+    ambulanceInfo: AmbulanceSchema
+});
+
+// Second section
+export const PatientSchema = z.object({
+    personalInfo: PersonSchema,
+    nationalIdPicture: UploadFile,
+    gender: z
+        .string()
+        .regex(alphabeticSpace, {
+            message: 'Caracteres inválidos. Se permiten únicamente caracteres alfabéticos'
+        })
+        .trim()
+        .nonempty(),
+    phone: z
+        .string()
+        .regex(numeric, { message: 'Caracteres inválidos. Se permiten únicamente digitos' })
+        .trim()
+        .length(10, { message: 'La longitud debe ser de 10 digitos' })
+        .nonempty(),
+    address: locationSchema,
+    birthDate: z.string().date().nonempty(),
+    condition: z
+        .string()
+        .trim()
+        .regex(alphabetical, {
+            message: 'Caracteres inválidos. Se permiten únicamente caracteres alfabéticos'
+        })
+        .nonempty(),
+    eps: EpsSchema
+});
+
+// Third section
+// Fourth section
+
+// Final schema
 export const formSchema = z.object({
-    nurseIdType: nationalIdType,
-    nurseIdNumber: nationalIdNumber,
-    nurseFirstName: requiredName,
-    nurseSecondName: optionalName,
-    nurseFirstSurname: requiredName,
-    nurseSecondSurname: optionalName,
-
-    driverIdType: nationalIdType,
-    driverIdNumber: nationalIdNumber,
-    driverFirstName: requiredName,
-    driverSecondName: optionalName,
-    driverFirstSurname: requiredName,
-    driverSecondSurname: optionalName,
-
-    ambulancePlate: z.string().length(6).regex(alphanumeric).trim(),
-
-    patientIdType: nationalIdType,
-    patientIdNumber: nationalIdNumber,
-    patientFirstname: requiredName,
-    patientSecondName: optionalName,
-    patientFirstSurname: requiredName,
-    patientSecondSurname: optionalName,
-    patientIdPicture: file,
-    patientGender: z.string().min(1).max(50).trim().regex(alphabetical).nonempty(),
-    phone: z.string().length(10).trim().regex(numeric).nonempty(),
-    patientProvince: z.string().min(1).max(50).trim().regex(alphabetical).nonempty(),
-    patientCity: z.string().min(1).max(50).trim().regex(alphabetical).nonempty(),
-    patientAddress: z.string().min(1).max(255).trim().regex(alphanumericPunctuation).nonempty(),
-    patientBirthDate: z.string().date().nonempty(),
-    patientCondition: z.string().min(1).max(50).trim().regex(alphabetical).nonempty(),
-    patientEps: z.string().min(1).max(50).trim().regex(alphabetical).nonempty()
+    emergencyCrew: EmergencyCrewSchema,
+    patient: PatientSchema
 });
 
 export type FormSchema = typeof formSchema;
