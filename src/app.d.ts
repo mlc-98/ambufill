@@ -7,6 +7,11 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+		type IdType = {
+			id: string;
+			name: string;
+			abbreviation: string;
+		}
 	}
 }
 

@@ -9,9 +9,9 @@ export type FormSchema = typeof formSchema;*/
 import {
 	alphabetical,
 	alphabeticSpace,
-	alphanumeric,
 	alphanumericPunctuation,
-	numeric
+	numeric,
+	plate
 } from '$lib/regexp/regexp';
 import { locationSchema } from '$lib/schema/location';
 import { PersonSchema } from '$lib/schema/person';
@@ -21,7 +21,7 @@ import { z } from 'zod';
 export const AmbulanceSchema = z.object({
 	plate: z
 		.string()
-		.regex(alphanumeric, {
+		.regex(plate, {
 			message: 'Caracteres inválidos. Se permiten únicamente caracteres alfanuméricos'
 		})
 		.trim()
@@ -84,15 +84,6 @@ export const formSchema = z.object({
 	patient: PatientSchema
 });
 
-// Misc
-
-export const NationalIdTypes = [
-	{ abbreviation: 'CC', label: 'Cédula de ciudadanía' },
-	{ abbreviation: 'CE', label: 'Cédula de extranjería' },
-	{ abbreviation: 'PA', label: 'Pasaporte' },
-	{ abbreviation: 'RC', label: 'Registro civil' },
-	{ abbreviation: 'RC', label: 'Registro civil' }
-];
 
 export type EmergencyCrewSchema = typeof emergencyCrewSchema;
 export type FormSchema = typeof formSchema;

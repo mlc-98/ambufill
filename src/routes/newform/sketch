@@ -1,0 +1,101 @@
+<Card.Root>
+    <Card.Header>
+        <Card.Title class="text-xl font-bold">Información personal enfermero</Card.Title>
+    </Card.Header>
+    <Card.Content>
+        <Form.Fieldset
+            {form}
+            name="emergencyCrew.driverPersonalInfo.idType"
+            class="flex flex-col space-y-1"
+        >
+            <Legend class="font-bold">Tipo de documento</Legend>
+            {#await idTypes}
+                <p>waiting for the promise to resolve...</p>
+            {:then idTypesValues}
+                <RadioGroup.Root bind:value={$formData.emergencyCrew.driverPersonalInfo.idType.id}>
+                    {#each idTypesValues as idTypeValue}
+                        <Form.Control>
+                            {#snippet children({ props })}
+                            <div class="flex items-center space-x-2">
+                                <RadioGroup.Item
+                                    value={idTypeValue.id}
+                                    {...props}
+                                />
+                                <Form.Label for={idTypeValue.id}>{idTypeValue.name}</Form.Label>
+                            </div>
+                            {/snippet}
+                        </Form.Control>
+                    {/each}
+                </RadioGroup.Root>
+            {:catch error}
+                <p>Something went wrong: {error.message}</p>
+            {/await}
+            <Form.FieldErrors />
+        </Form.Fieldset>
+
+        <Form.Field {form} name="emergencyCrew.driverPersonalInfo.idNumber" class="mt-4">
+            <Form.Control>
+                {#snippet children({ props })}
+                    <Form.Label>Número de documento</Form.Label>
+                    <Input
+                        {...props}
+                        bind:value={$formData.emergencyCrew.driverPersonalInfo.idNumber}
+                    />
+                {/snippet}
+            </Form.Control>
+            <Form.FieldErrors />
+        </Form.Field>
+
+        <Form.Field {form} name="emergencyCrew.driverPersonalInfo.firstName">
+            <Form.Control>
+                {#snippet children({ props })}
+                    <Form.Label>Primer nombre</Form.Label>
+                    <Input
+                        {...props}
+                        bind:value={$formData.emergencyCrew.driverPersonalInfo.firstName}
+                    />
+                {/snippet}
+            </Form.Control>
+            <Form.FieldErrors />
+        </Form.Field>
+
+        <Form.Field {form} name="emergencyCrew.driverPersonalInfo.secondName">
+            <Form.Control>
+                {#snippet children({ props })}
+                    <Form.Label>Segundo nombre</Form.Label>
+                    <Input
+                        {...props}
+                        bind:value={$formData.emergencyCrew.driverPersonalInfo.secondName}
+                    />
+                {/snippet}
+            </Form.Control>
+            <Form.FieldErrors />
+        </Form.Field>
+
+        <Form.Field {form} name="emergencyCrew.driverPersonalInfo.firstSurname">
+            <Form.Control>
+                {#snippet children({ props })}
+                    <Form.Label>Primer apellido</Form.Label>
+                    <Input
+                        {...props}
+                        bind:value={$formData.emergencyCrew.driverPersonalInfo.firstSurname}
+                    />
+                {/snippet}
+            </Form.Control>
+            <Form.FieldErrors />
+        </Form.Field>
+
+        <Form.Field {form} name="emergencyCrew.driverPersonalInfo.secondSurname">
+            <Form.Control>
+                {#snippet children({ props })}
+                    <Form.Label>Segundo apellido</Form.Label>
+                    <Input
+                        {...props}
+                        bind:value={$formData.emergencyCrew.driverPersonalInfo.secondSurname}
+                    />
+                {/snippet}
+            </Form.Control>
+            <Form.FieldErrors />
+        </Form.Field>
+    </Card.Content>
+</Card.Root>

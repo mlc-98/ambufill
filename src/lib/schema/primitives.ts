@@ -31,8 +31,7 @@ export const nationalIdNumber = z
 	.min(1, { message: minLengthMessage })
 	.max(50, { message: maxLengthMessage })
 	.trim()
-	.regex(numeric, { message: 'Caracteres inválidos. Se permiten únicamente digitos' })
-	.nonempty();
+	.regex(numeric, { message: 'Caracteres inválidos. Se permiten únicamente digitos' });
 
 export const UploadFile = z
 	.instanceof(File, { message: 'Por favor, añade un archivo' })

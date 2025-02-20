@@ -11,3 +11,4 @@ export const alphabetical = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]+$/u;
 export const alphabeticSpace = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ ]+$/u;
 // numeric: Numeric characters
 export const numeric = /^\d+$/u;
+export const plate = /^[A-Z]{3}\d{3}$/u;
